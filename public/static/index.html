@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <link href='/resources/css/common.css' rel='stylesheet' type='text/css'></link>
+    <title>Template Project</title>
+  </head>
+
+  <body ng-app="TemplateApp">
+      <div ng-controller="SimpleController">
+        <h1>{{ title }}</h1>
+      </div>
+      <div>
+        <h1>This is not fancy</h1>
+        <p>
+          Not fancy at all
+        </p>
+      </div>
+      <div class='fancyDiv'>
+        <h1>This is quite fancy</h1>
+        <p>
+          So fancy!!!
+        </p>
+      </div>
+
+      <hello-world></hello-world>
+      <p>Some stuff</p>
+      <yellow-bird></yellow-bird>
+
+      <div ng-controller="ImageController">
+        <image-rotator image="images[0]"></image-rotator>
+        <image-rotator image="images[1]"></image-rotator>
+      </div>
+
+      <div ng-controller="RotatingImageController">
+        <rotating-image id="0"></rotating-image>
+        <rotating-image id="1"></rotating-image>
+        <rotating-image id="2"></rotating-image>        
+      </div>
+
+  </body>
+
+  <script src='/resources/lib/angular.js'></script>
+  <script src='/resources/js/TemplateApp.js'></script>
+</html>

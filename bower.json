@@ -1,0 +1,27 @@
+{
+  "name": "templateProject",
+  "version": "0.1.0",
+  "authors": [
+    "Maximilian Wittmann <damxam@gmail.com>"
+  ],
+  "description": "A simple template project for node+angular+bower+gulp",
+  "main": "server.js",
+  "keywords": [
+    "template",
+    "angular",
+    "node",
+    "gulp",
+    "bower"
+  ],
+  "license": "GPL",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.26"
+  }
+}
