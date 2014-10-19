@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 // var logger = require('morgan');
 var favicon = require('serve-favicon');
+var fs = require('fs');
 // var path = require('path');
 // var router = express.Router();
 
@@ -14,20 +15,36 @@ var favicon = require('serve-favicon');
   app.get('/images', function(req, res) {
     console.log("Image called");
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify([
-      {
-        'src': './resources/images/a.png',
-        'name': 'AImage'
+
+    var imagesJSON = [];
+    fs.readdir(__dirname + '/public/resources/images/', function(err, filenames) {
+      if(err)
+        throw err;
+      for(var i = 0; i < filenames.length; i++) {
+        imagesJSON.push({
+          'src': './resources/images/' + filenames[i],
+          'name': 'An Image'
+        });
       }
-      ,{
-        'src': './resources/images/b.png',
-        'name': 'BImage'
-      }
-      ,{
-        'src': './resources/images/c.png',
-        'name': 'CImage'
-      }
-    ]));
+      res.end(JSON.stringify(imagesJSON));
+      console.log("Done");
+    });
+
+
+    // res.end(JSON.stringify([
+    //   {
+    //     'src': './resources/images/a.png',
+    //     'name': 'AImage'
+    //   }
+    //   ,{
+    //     'src': './resources/images/b.png',
+    //     'name': 'BImage'
+    //   }
+    //   ,{
+    //     'src': './resources/images/c.png',
+    //     'name': 'CImage'
+    //   }
+    // ]));
   });
 })();
 

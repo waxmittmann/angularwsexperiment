@@ -100,7 +100,7 @@ app.directive('rotatingImage', [function() {
       // }
         scope.image = scope.images[localScope.id];
       // localScope.image = scope.images[localScope.id];
-        console.log("Watched and got " + scope.images + "\n and: " + scope.image);
+        console.log("For " + localScope.id + " watched and got " + scope.images[localScope.id] + "\n and: " + scope.image);
     });
   };
 
