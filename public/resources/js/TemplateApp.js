@@ -1,4 +1,4 @@
-var app = angular.module('TemplateApp', []);
+var app = angular.module('TemplateApp', ['Test']);
 
 app.controller('SimpleController', [
   '$scope', function($scope) {
@@ -38,15 +38,6 @@ app.directive('imageRotator', function() {
 });
 
 app.controller('ImageController', ['$scope', function($scope) {
-    // $scope.imageA = {
-    //     'name': 'ImageA',
-    //     'src': './resources/images/hello.png'
-    // };
-    // $scope.imageB = {
-    //     'name': 'ImageB',
-    //     'src': './resources/images/hello.png'
-    // };
-
     $scope.images = [];
     $scope.images[0] = {
         'name': 'ImageA',
@@ -64,9 +55,6 @@ app.controller('RotatingImageController', ['$scope', '$http',
     $scope.images = [];
     $http.get('/images')
       .success(function(data, status, headers, config) {
-          // console.log("Got " + data);
-          // var imageData = JSON.parse(data);
-          // var imageData = data;
           $scope.images = data;
           console.log("Had success with " + data);
 
@@ -88,18 +76,16 @@ app.directive('rotatingImage', [function() {
   var localScope = {};
 
   var linkFunction = function(scope, element, attributes) {
-    console.log("Attributses id: " + attributes["id"]);
-    localScope.id = attributes["id"];
-    scope.image = scope.images[localScope.id];
-    console.log("Initially got " + scope.image);
-      scope.$watch('images', function(newValue, oldValue) {
-      // scope.$watch(scope.images, function(newValue, oldValue) {
-
-      // if(scope !== undefined && !scope.hasOwnProperty('image')) {
-      //   throw "Do not want to override inheriting property";
-      // }
+      console.log("Attributes id: " + attributes["id"]);
+      localScope.id = attributes["id"];
+      if(scope.images !== undefined) {
         scope.image = scope.images[localScope.id];
-      // localScope.image = scope.images[localScope.id];
+        console.log("Initially got " + scope.image);
+      } else {
+        console.log("Initially did not get an image");
+      }
+      scope.$watch('images', function(newValue, oldValue) {
+        scope.image = scope.images[localScope.id];
         console.log("For " + localScope.id + " watched and got " + scope.images[localScope.id] + "\n and: " + scope.image);
     });
   };
@@ -109,9 +95,8 @@ app.directive('rotatingImage', [function() {
       , replace: 'true'
       , templateUrl: './resources/partials/image.html'
       , link: linkFunction
-      , scope: true
-      //, scope: {
-        // image: localScope.image,
-      //}
+      , scope: {
+        'localScope': localScope
+      }
   };
 }]);
