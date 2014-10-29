@@ -43,6 +43,7 @@
 
       $scope.api = {
         registerForImages: function(directive) {
+          console.log("Registered " + directive);
           registeredDirectives.push(directive);
           registered[idAt] = 0;
           return idAt++;
@@ -61,15 +62,17 @@
   ]);
 
   app.directive('testDirective', ['$timeout', function($timeout) {
+      var that = this;
+
       var linkFunction = function(scope, element, attrs) {
         printScopes(scope);
 
-        var parentScope = scope.$parent;
-        scope.id = parentScope.api.registerForImages(this);
-        console.log("Hello, I am " + this + " with id " + scope.id);
-        // scope.callMe = function() {
-        //   console.log("Called " + scope.id);
-        // }
+        scope.changeImage = function(imageData) {
+          console.log("Changed to " + imageData);
+          scope.imageData = imageData;
+        }
+
+        scope.id = scope.api.registerForImages(scope.this);
       }
 
       return {
@@ -77,10 +80,7 @@
         , replace: 'true'
         , template: '<div style="border: 1px solid black"><h1>Test Directive</h1><img ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
         , link: linkFunction
-        // , scope : {
-        //   control: '='
-        // }
-        , scope: true
+        , scope : true
       };
     }
   ]);
