@@ -18,23 +18,32 @@
 
   app.controller('TestController', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
       var registered = {};
+      var registeredDirectives = [];
       var idAt = 0;
-      var getNextImage = function(images, id) {
-        if(registered[id] >= images.length) {
-          registered[id] = 0;
+
+      var changeImages = function() {
+        if($scope.images !== "undefined") {
+          //Choose a registered image displayer at random
+          var directiveToUpdate = registeredDirectives[Math.floor(Math.random() * registeredDirectives.length)];
+
+          //Get random image
+          var newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
+
+          //Change the image of the displayer to a random image
+          directiveToUpdate.imageData = newImage;
+          // directiveToUpdate.callMe();
+          console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
+
         }
-        return images[registered[id]++];
+        //Set timeout for next image
+        $timeout(changeImages, 2000);
       };
+      $timeout(changeImages, 2000);
+
 
       $scope.api = {
-        getNewImage: function(id) {
-          if (typeof $scope.images != 'undefined') {
-            return getNextImage($scope.images, id)
-          } else {
-            return "";
-          }
-        },
-        registerForImages: function() {
+        registerForImages: function(directive) {
+          registeredDirectives.push(directive);
           registered[idAt] = 0;
           return idAt++;
         }
@@ -56,19 +65,11 @@
         printScopes(scope);
 
         var parentScope = scope.$parent;
-        scope.id = parentScope.api.registerForImages();
-        var changeImages = function() {
-          console.log("Changing images for " + scope.id);
-          var newImage = parentScope.api.getNewImage(scope.id);
-          if(newImage !== "") {
-            console.log("Changing to " + newImage);
-            scope.imageData = newImage;
-          } else {
-            console.log("Didn't get image data");
-          }
-          $timeout(changeImages, 2000);
-        };
-        $timeout(changeImages, 2000);
+        scope.id = parentScope.api.registerForImages(this);
+        console.log("Hello, I am " + this + " with id " + scope.id);
+        // scope.callMe = function() {
+        //   console.log("Called " + scope.id);
+        // }
       }
 
       return {
@@ -76,6 +77,9 @@
         , replace: 'true'
         , template: '<div style="border: 1px solid black"><h1>Test Directive</h1><img ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
         , link: linkFunction
+        // , scope : {
+        //   control: '='
+        // }
         , scope: true
       };
     }
