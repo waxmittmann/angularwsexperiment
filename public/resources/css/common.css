@@ -9,3 +9,13 @@ body {
   display: inline-block; }
   .fancyDiv h1 {
     color: #3333AA; }
+
+
+.image-shower {
+  position: absolute;
+}
+
+.regular-size {
+  width: 200px;
+  height: 200px;
+}

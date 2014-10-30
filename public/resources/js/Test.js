@@ -78,7 +78,7 @@
       return {
         restrict: 'AE'
         , replace: 'true'
-        , template: '<div style="border: 1px solid black"><h1>Test Directive</h1><img ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
+        , template: '<div style="border: 1px solid black"><img style="width: 100%" ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
         , link: linkFunction
         , scope : true
       };

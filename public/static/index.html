@@ -9,11 +9,26 @@
         <h1>{{ title }}</h1>
       </div>
 
-      <div ng-controller="TestController">
-        <test-directive id="img0"></test-directive>
-        <test-directive id="img1"></test-directive>
-      </div>
+      <!-- <div ng-controller="TestController">
+        <test-directive control="controllerApi" id="img0"></test-directive>
+        <test-directive control="controllerApi" id="img1"></test-directive>
+      </div> -->
 
+      <div ng-controller="TestController" style="display: absolute">
+        <test-directive class="image-shower regular-size" style="top: 50px; left: 50px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 50px; left: 300px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 275px; left: 20px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 510px; left: 70px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 0px; left: 550px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 280px; left: 780px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 20px; left: 780px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 520px; left: 750px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 300px; left: 300px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 740px; left: 20px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 780px; left: 280px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 750px; left: 530px"></test-directive>
+        <test-directive class="image-shower regular-size" style="top: 770px; left: 770px"></test-directive>
+      </div>
   </body>
 
   <script src='/resources/lib/angular.js'></script>
