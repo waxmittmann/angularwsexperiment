@@ -21,24 +21,27 @@
       var registeredDirectives = [];
       var idAt = 0;
 
-      var changeImages = function() {
-        if($scope.images !== "undefined") {
-          //Choose a registered image displayer at random
-          var directiveToUpdate = registeredDirectives[Math.floor(Math.random() * registeredDirectives.length)];
+      var imageChanger = function(directiveToUpdate, $scope) {
+        var changeImages = function() {
+          console.log("Have: " + directiveToUpdate + " and " + $scope);
+          try {
+            if($scope.images !== "undefined") {
+              //Get random image
+              var newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
+              //Change the image of the displayer to a random image
+              directiveToUpdate.imageData = newImage;
+              // directiveToUpdate.callMe();
+              console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
 
-          //Get random image
-          var newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
-
-          //Change the image of the displayer to a random image
-          directiveToUpdate.imageData = newImage;
-          // directiveToUpdate.callMe();
-          console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
-
-        }
-        //Set timeout for next image
-        $timeout(changeImages, 2000);
+            }
+          } catch (err) {
+            //Ignore
+          }
+          //Set timeout for next image
+          $timeout(changeImages, Math.floor(1500 + Math.random() * 4000));
+        };
+        changeImages();
       };
-      $timeout(changeImages, 2000);
 
 
       $scope.api = {
@@ -46,6 +49,7 @@
           console.log("Registered " + directive);
           registeredDirectives.push(directive);
           registered[idAt] = 0;
+          imageChanger(directive, $scope);
           return idAt++;
         }
       };
