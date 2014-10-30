@@ -43,13 +43,14 @@
         changeImages();
       };
 
-
       $scope.api = {
         registerForImages: function(directive) {
           console.log("Registered " + directive);
           registeredDirectives.push(directive);
           registered[idAt] = 0;
-          imageChanger(directive, $scope);
+          if($scope.images) {
+            imageChanger(directive, $scope);
+          }
           return idAt++;
         }
       };
@@ -57,6 +58,9 @@
       $http.get('/images')
         .success(function(data, status, headers, config) {
             $scope.images = data;
+            for(var i = 0; i < registeredDirectives.length; i++) {
+              imageChanger(registeredDirectives[i], $scope);
+            }
             console.log("Had success with " + data);
         }).
         error(function(data, status, headers, config) {
