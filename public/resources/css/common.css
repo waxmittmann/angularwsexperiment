@@ -10,12 +10,18 @@ body {
   .fancyDiv h1 {
     color: #3333AA; }
 
-
 .image-shower {
-  position: absolute;
-}
+  position: absolute; }
 
 .regular-size {
   width: 200px;
-  height: 200px;
-}
+  height: 200px; }
+
+.large-size {
+  width: 400px;
+  height: 400px; }
+
+.central-panel {
+  position: absolute;
+  border: 2px solid black;
+  background-color: 11184810xAAAAAA; }
