@@ -8,15 +8,20 @@
 	perspective: 1000;
 }
 
-/* flip the pane when hovered */
-.flip-container:hover .flipper, .flip-container.hover .flipper {
+/* flip the pane when it has flipping class also */
+.flip-container.flipping .flipper {
 	transform: rotateY(180deg);
 }
 
-.flip-container, .front, .back {
-	width: 320px;
-	height: 480px;
+/* flip the pane when hovered */
+.flip-container:hover .flipper, .flip-container.hover .flipper {
+  transform: rotateY(180deg);
 }
+
+// .flip-container, .front, .back {
+// 	width: 320px;
+// 	height: 480px;
+// }
 
 /* flip speed goes here */
 .flipper {

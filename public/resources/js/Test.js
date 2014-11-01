@@ -10,12 +10,23 @@
           try {
             if($scope.images !== "undefined") {
               var newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
-              directiveToUpdate.imageData = newImage;
+              if(directiveToUpdate.imageData === "undefined") {
+                directiveToUpdate.imageData = newImage;
+              } else {
+                directiveToUpdate.imageData = directiveToUpdate.backImageData;
+              }
+              directiveToUpdate.backImageData = newImage;
+              // directiveToUpdate.imageData = newImage;
               var rotateAmount = registeredDirectiveRotation[directiveToUpdate];
               rotateAmount++;
               if(rotateAmount > 360)
                 rotateAmount = 0;
               registeredDirectiveRotation[directiveToUpdate] = rotateAmount;
+
+              if(Math.random() < 0.2) {
+                registeredDirective.extraClasses = "flipping";
+              }
+
               // directiveToUpdate.rotateAmount = 45;
               directiveToUpdate.imageStyle = {'transform': 'rotate(' + rotateAmount + 'deg)'};
               console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
@@ -81,7 +92,8 @@
         , replace: 'true'
         // , template: '<div ng-style="{\'transform\': \'rotate(\'{{rotateAmount}}deg\')\', \'-webkit-transform\': \'rotate(\'+{{rotateAmount}}+\'deg)\', \'-ms-transform\': \'rotate(\'{{rotateAmount}+\'deg)\'}" style="border: 1px solid black"><img style="width: 100%" ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
         // , template: '<div ng-style={\'background-color\': \'red\', \'transform\': \'rotate({{rotateAmount}}deg)\'} style="border: 1px solid black"><img style="width: 100%" ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
-        , template: '<div ng-style="imageStyle" style="border: 1px solid black"><img style="width: 100%" ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
+        , templateUrl: './resources/partials/testDirectivePartial.html'
+        // , template:
         , link: linkFunction
         , scope : true
       };
