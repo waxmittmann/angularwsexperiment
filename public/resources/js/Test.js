@@ -23,9 +23,11 @@
                 rotateAmount = 0;
               registeredDirectiveRotation[directiveToUpdate] = rotateAmount;
 
-              if(Math.random() < 0.2) {
-                registeredDirective.extraClasses = "flipping";
-              }
+              // if(Math.random() < 0.2) {
+                // registeredDirective.extraClasses = "flipping";
+                directiveToUpdate.extraClasses = "flipper2";
+                $scope.$apply();
+              // }
 
               // directiveToUpdate.rotateAmount = 45;
               directiveToUpdate.imageStyle = {'transform': 'rotate(' + rotateAmount + 'deg)'};

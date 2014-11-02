@@ -20,6 +20,9 @@
   transform-style: preserve-3d;
   position: relative; }
 
+.flipper2 {
+  transform: rotateY(180deg); }
+
 /* hide back of pane during swap */
 .front, .back {
   backface-visibility: hidden;
