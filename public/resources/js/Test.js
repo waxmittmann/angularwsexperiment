@@ -10,7 +10,9 @@
           try {
             if($scope.images !== "undefined") {
               var newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
-              if(directiveToUpdate.imageData === "undefined") {
+              console.log("IT IS " + directiveToUpdate.imageData);
+
+              if(typeof directiveToUpdate.imageData === "undefined") {
                 directiveToUpdate.imageData = newImage;
               } else {
                 directiveToUpdate.imageData = directiveToUpdate.backImageData;
@@ -23,11 +25,22 @@
                 rotateAmount = 0;
               registeredDirectiveRotation[directiveToUpdate] = rotateAmount;
 
+              if(directiveToUpdate.extraClasses === "flipper2") {
+                directiveToUpdate.extraClasses = "";
+              } else {
+                directiveToUpdate.extraClasses = "flipper2";
+              }
+
+              /*
               // if(Math.random() < 0.2) {
                 // registeredDirective.extraClasses = "flipping";
-                directiveToUpdate.extraClasses = "flipper2";
+                directiveToUpdate.extraClasses = "";
                 $scope.$apply();
-              // }
+                $timeout(function() {
+                  directiveToUpdate.extraClasses = "flipper2";
+                }, 1000);
+
+              // }*/
 
               // directiveToUpdate.rotateAmount = 45;
               directiveToUpdate.imageStyle = {'transform': 'rotate(' + rotateAmount + 'deg)'};
