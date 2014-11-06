@@ -10,47 +10,39 @@
           try {
             if($scope.images !== "undefined") {
               var newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
-              console.log("IT IS " + directiveToUpdate.imageData);
+              while(newImage == directiveToUpdate.imageData || newImage == directiveToUpdate.backImageData) {
+                newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
+              }
 
-              if(typeof directiveToUpdate.imageData === "undefined") {
+              var firstRun = typeof directiveToUpdate.imageData === "undefined";
+
+              if(firstRun) {
                 directiveToUpdate.imageData = newImage;
               } else {
                 directiveToUpdate.imageData = directiveToUpdate.backImageData;
               }
               directiveToUpdate.backImageData = newImage;
-              // directiveToUpdate.imageData = newImage;
-              var rotateAmount = registeredDirectiveRotation[directiveToUpdate];
-              rotateAmount++;
-              if(rotateAmount > 360)
-                rotateAmount = 0;
-              registeredDirectiveRotation[directiveToUpdate] = rotateAmount;
 
-              if(directiveToUpdate.extraClasses === "flipper2") {
-                directiveToUpdate.extraClasses = "";
-              } else {
-                directiveToUpdate.extraClasses = "flipper2";
+              if(!firstRun) {
+                directiveToUpdate.extraClasses = "flipper2"
+                $timeout(function() {
+                  directiveToUpdate.extraClasses = ""
+                }, 1500);
               }
 
-              /*
-              // if(Math.random() < 0.2) {
-                // registeredDirective.extraClasses = "flipping";
-                directiveToUpdate.extraClasses = "";
-                $scope.$apply();
-                $timeout(function() {
-                  directiveToUpdate.extraClasses = "flipper2";
-                }, 1000);
+              // if(directiveToUpdate.extraClasses === "flipper2") {
+              //   directiveToUpdate.extraClasses = "";
+              // } else {
+              //   directiveToUpdate.extraClasses = "flipper2";
+              // }
 
-              // }*/
-
-              // directiveToUpdate.rotateAmount = 45;
               directiveToUpdate.imageStyle = {'transform': 'rotate(' + rotateAmount + 'deg)'};
               console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
-
             }
           } catch (err) {
             //Ignore
           }
-          $timeout(changeImages, Math.floor(1500 + Math.random() * 4000));
+          $timeout(changeImages, Math.floor(3000 + Math.random() * 4000));
         };
         changeImages();
       };
@@ -62,7 +54,6 @@
           registerForImages: function(directive) {
             console.log("Registered " + directive);
             registeredDirectives.push(directive);
-            registeredDirectiveRotation[directive] = 0;
             if($scope.images) {
               imageChanger(directive, $scope);
             }
@@ -97,7 +88,6 @@
         scope.changeImage = function(imageData) {
           console.log("Changed to " + imageData);
           scope.imageData = imageData;
-          scope.rotateAmount = 130;
         }
         scope.id = scope.api.registerForImages(scope.this);
       }
@@ -105,10 +95,7 @@
       return {
         restrict: 'AE'
         , replace: 'true'
-        // , template: '<div ng-style="{\'transform\': \'rotate(\'{{rotateAmount}}deg\')\', \'-webkit-transform\': \'rotate(\'+{{rotateAmount}}+\'deg)\', \'-ms-transform\': \'rotate(\'{{rotateAmount}+\'deg)\'}" style="border: 1px solid black"><img style="width: 100%" ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
-        // , template: '<div ng-style={\'background-color\': \'red\', \'transform\': \'rotate({{rotateAmount}}deg)\'} style="border: 1px solid black"><img style="width: 100%" ng-src="{{imageData.src}}"</img><p>{{imageData.name}}</p></div>'
-        , templateUrl: './resources/partials/testDirectivePartial.html'
-        // , template:
+        , templateUrl: './resources/partials/imageRotatorPartial.html'
         , link: linkFunction
         , scope : true
       };
