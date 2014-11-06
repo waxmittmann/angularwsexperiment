@@ -18,17 +18,33 @@
 
               if(firstRun) {
                 directiveToUpdate.imageData = newImage;
-              } else {
-                directiveToUpdate.imageData = directiveToUpdate.backImageData;
+                directiveToUpdate.backImageData = newImage;
               }
-              directiveToUpdate.backImageData = newImage;
 
-              if(!firstRun) {
-                directiveToUpdate.extraClasses = "flipper2"
+              if(directiveToUpdate.extraClasses === "flip180") {
+                console.log("Currently flipped, unflipping");
+                directiveToUpdate.imageData = newImage;
                 $timeout(function() {
-                  directiveToUpdate.extraClasses = ""
+                  directiveToUpdate.extraClasses = "";
+                  console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
+                  $timeout(changeImages, Math.floor(3000 + Math.random() * 4000));
+                }, 1500);
+              } else {
+                console.log("Currently unflipped, flipping");
+                directiveToUpdate.backImageData = newImage;
+                $timeout(function() {
+                  directiveToUpdate.extraClasses = "flip180";
+                  console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
+                  $timeout(changeImages, Math.floor(3000 + Math.random() * 4000));
                 }, 1500);
               }
+
+              // if(!firstRun) {
+              //   directiveToUpdate.extraClasses = "flipper2"
+              //   $timeout(function() {
+              //     directiveToUpdate.extraClasses = ""
+              //   }, 1500);
+              // }
 
               // if(directiveToUpdate.extraClasses === "flipper2") {
               //   directiveToUpdate.extraClasses = "";
@@ -36,13 +52,10 @@
               //   directiveToUpdate.extraClasses = "flipper2";
               // }
 
-              directiveToUpdate.imageStyle = {'transform': 'rotate(' + rotateAmount + 'deg)'};
-              console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
             }
           } catch (err) {
             //Ignore
           }
-          $timeout(changeImages, Math.floor(3000 + Math.random() * 4000));
         };
         changeImages();
       };
