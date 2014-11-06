@@ -9,49 +9,41 @@
         var changeImages = function() {
           try {
             if($scope.images !== "undefined") {
-              var newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
-              while(newImage == directiveToUpdate.imageData || newImage == directiveToUpdate.backImageData) {
-                newImage = $scope.images[Math.floor(Math.random() * $scope.images.length)];
-              }
 
               var firstRun = typeof directiveToUpdate.imageData === "undefined";
 
               if(firstRun) {
-                directiveToUpdate.imageData = newImage;
-                directiveToUpdate.backImageData = newImage;
-              }
+                var newImage1 = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
+                var newImage2 = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
 
-              if(directiveToUpdate.extraClasses === "flip180") {
+                console.log("Initial flip");
+
+                directiveToUpdate.imageData = newImage1;
+                directiveToUpdate.backImageData = newImage2;
+                $timeout(function() {
+                  directiveToUpdate.extraClasses = "flip180";
+                  console.log("Updated " + directiveToUpdate + " to use " + newImage1.src + " and " + newImage2.src);
+                  $timeout(changeImages, getTimeToNext());
+                }, getTimeToNext());
+              } else if(directiveToUpdate.extraClasses === "flip180") {
+                var newImage = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
                 console.log("Currently flipped, unflipping");
                 directiveToUpdate.imageData = newImage;
                 $timeout(function() {
                   directiveToUpdate.extraClasses = "";
                   console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
-                  $timeout(changeImages, Math.floor(3000 + Math.random() * 4000));
-                }, 1500);
+                  $timeout(changeImages, getTimeToNext());
+                }, getTimeToNext());
               } else {
+                var newImage = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
                 console.log("Currently unflipped, flipping");
                 directiveToUpdate.backImageData = newImage;
                 $timeout(function() {
                   directiveToUpdate.extraClasses = "flip180";
                   console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
-                  $timeout(changeImages, Math.floor(3000 + Math.random() * 4000));
-                }, 1500);
+                  $timeout(changeImages, getTimeToNext());
+                }, getTimeToNext());
               }
-
-              // if(!firstRun) {
-              //   directiveToUpdate.extraClasses = "flipper2"
-              //   $timeout(function() {
-              //     directiveToUpdate.extraClasses = ""
-              //   }, 1500);
-              // }
-
-              // if(directiveToUpdate.extraClasses === "flipper2") {
-              //   directiveToUpdate.extraClasses = "";
-              // } else {
-              //   directiveToUpdate.extraClasses = "flipper2";
-              // }
-
             }
           } catch (err) {
             //Ignore
@@ -87,6 +79,18 @@
           error(function(data, status, headers, config) {
             throw "Had error with status: " + status;
           });
+      }
+
+      function getNewImage(images, curFrontImage, curBackImage) {
+        var newImage = images[Math.floor(Math.random() * images.length)];
+        while(newImage == curFrontImage || newImage == curBackImage) {
+          newImage = images[Math.floor(Math.random() * images.length)];
+        }
+        return newImage;
+      }
+
+      function getTimeToNext() {
+        return Math.floor(2000 + Math.random() * 2000);
       }
 
       //Main stuff
