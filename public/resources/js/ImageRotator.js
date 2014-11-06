@@ -1,7 +1,7 @@
 (function() {
-  var app = angular.module('Test', []);
+  var app = angular.module('MainApp', []);
 
-  app.controller('TestController', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
+  app.controller('ImageRotatorController', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
       //Fields
       var registeredDirectives = [];
       var registeredDirectiveRotation = {};
@@ -83,7 +83,7 @@
     }
   ]);
 
-  app.directive('testDirective', ['$timeout', function($timeout) {
+  app.directive('imageRotator', ['$timeout', function($timeout) {
       var linkFunction = function(scope, element, attrs) {
         scope.changeImage = function(imageData) {
           console.log("Changed to " + imageData);
