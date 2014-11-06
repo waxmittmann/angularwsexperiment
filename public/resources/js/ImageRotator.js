@@ -5,44 +5,60 @@
       //Fields
       var registeredDirectives = [];
       var registeredDirectiveRotation = {};
+
       var imageChanger = function(directiveToUpdate, $scope) {
+        function getNewImage(images, curFrontImage, curBackImage) {
+          var newImage = images[Math.floor(Math.random() * images.length)];
+          while(newImage == curFrontImage || newImage == curBackImage) {
+            newImage = images[Math.floor(Math.random() * images.length)];
+          }
+          return newImage;
+        }
+
+        function getTimeToNext() {
+          return Math.floor(2000 + Math.random() * 2000);
+        }
+
+        function flipToNext(directiveToUpdate, newImage) {
+          var extraClasses;
+          if(directiveToUpdate.currentlyFlipped) {
+              directiveToUpdate.imageData = newImage;
+              extraClasses = "";
+          } else {
+              directiveToUpdate.backImageData = newImage;
+              extraClasses = "flip180";
+          }
+          setupTimeoutForNextFlip(directiveToUpdate, extraClasses);
+        }
+
+        function setupInitialFlip(directiveToUpdate, frontImage, backImage) {
+          console.log("Initial flip");
+          directiveToUpdate.imageData = frontImage;
+          directiveToUpdate.backImageData = backImage;
+          directiveToUpdate.currentlyFlipped = false;
+          var extraClasses = "flip180";
+          setupTimeoutForNextFlip(directiveToUpdate, extraClasses);
+        }
+
+        function setupTimeoutForNextFlip(directiveToUpdate, extraClasses) {
+          $timeout(function() {
+            directiveToUpdate.currentlyFlipped = !directiveToUpdate.currentlyFlipped;
+            directiveToUpdate.extraClasses = extraClasses;
+            $timeout(changeImages, getTimeToNext());
+          }, getTimeToNext());
+        }
+
         var changeImages = function() {
           try {
             if($scope.images !== "undefined") {
-
               var firstRun = typeof directiveToUpdate.imageData === "undefined";
-
               if(firstRun) {
                 var newImage1 = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
                 var newImage2 = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
-
-                console.log("Initial flip");
-
-                directiveToUpdate.imageData = newImage1;
-                directiveToUpdate.backImageData = newImage2;
-                $timeout(function() {
-                  directiveToUpdate.extraClasses = "flip180";
-                  console.log("Updated " + directiveToUpdate + " to use " + newImage1.src + " and " + newImage2.src);
-                  $timeout(changeImages, getTimeToNext());
-                }, getTimeToNext());
-              } else if(directiveToUpdate.extraClasses === "flip180") {
-                var newImage = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
-                console.log("Currently flipped, unflipping");
-                directiveToUpdate.imageData = newImage;
-                $timeout(function() {
-                  directiveToUpdate.extraClasses = "";
-                  console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
-                  $timeout(changeImages, getTimeToNext());
-                }, getTimeToNext());
+                setupInitialFlip(directiveToUpdate, newImage1, newImage2);
               } else {
                 var newImage = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
-                console.log("Currently unflipped, flipping");
-                directiveToUpdate.backImageData = newImage;
-                $timeout(function() {
-                  directiveToUpdate.extraClasses = "flip180";
-                  console.log("Updated " + directiveToUpdate + " to use " + newImage.src);
-                  $timeout(changeImages, getTimeToNext());
-                }, getTimeToNext());
+                flipToNext(directiveToUpdate, newImage);
               }
             }
           } catch (err) {
@@ -79,18 +95,6 @@
           error(function(data, status, headers, config) {
             throw "Had error with status: " + status;
           });
-      }
-
-      function getNewImage(images, curFrontImage, curBackImage) {
-        var newImage = images[Math.floor(Math.random() * images.length)];
-        while(newImage == curFrontImage || newImage == curBackImage) {
-          newImage = images[Math.floor(Math.random() * images.length)];
-        }
-        return newImage;
-      }
-
-      function getTimeToNext() {
-        return Math.floor(2000 + Math.random() * 2000);
       }
 
       //Main stuff
