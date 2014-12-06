@@ -6,7 +6,7 @@ var fs = require('fs');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-//ROUTING
+//Init image stuff
 (function() {
   var imgAt = 0;
 
@@ -30,6 +30,7 @@ var io = require('socket.io')(http);
   });
 })();
 
+//ROUTING
 app.use('/', express.static(__dirname + '/public/static'));
 
 app.use('/resources', express.static(__dirname + '/public/resources'));
@@ -85,20 +86,3 @@ http.listen(8000);
 
 console.log("Server is running on 8000");
 module.exports = app;
-
-
-/****************************
-*****************************
-    Web Sockets
-*****************************
-****************************/
-// var server = http.createServer(app).listen(8000, function() {
-//     console.log('Express server listening on port 8000');
-// });
-//
-// // let socket.IO listen on the server
-// io = io.listen(server);
-//
-// io.on('connection', function(socket) {
-//   /* handle connection */
-// });
