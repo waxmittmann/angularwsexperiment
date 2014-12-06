@@ -3,6 +3,9 @@ var app = express();
 var favicon = require('serve-favicon');
 var fs = require('fs');
 
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 //ROUTING
 (function() {
   var imgAt = 0;
@@ -63,7 +66,39 @@ app.use(function(req, res, next) {
     next(err);
 });
 
+//Websocket stuff
+io.on('connection', function(socket){
+  console.log('a user connected');
 
-app.listen(8000);
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
+  socket.on('stateChange', function(msg) {
+    console.log("Got stateChange ", msg);
+    io.emit('stateChange', msg);
+  });
+});
+
+
+http.listen(8000);
+
 console.log("Server is running on 8000");
 module.exports = app;
+
+
+/****************************
+*****************************
+    Web Sockets
+*****************************
+****************************/
+// var server = http.createServer(app).listen(8000, function() {
+//     console.log('Express server listening on port 8000');
+// });
+//
+// // let socket.IO listen on the server
+// io = io.listen(server);
+//
+// io.on('connection', function(socket) {
+//   /* handle connection */
+// });

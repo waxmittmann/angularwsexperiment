@@ -34,6 +34,8 @@
   "dependencies": {
     "angular": "^1.2.23",
     "express": "^4.9.7",
-    "serve-favicon": "^2.1.6"
+    "serve-favicon": "^2.1.6",
+    "socket.io": "^1.2.1",
+    "websocket": "^1.0.10"
   }
 }
