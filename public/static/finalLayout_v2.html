@@ -1,6 +1,12 @@
 <html>
 <head>
   <link rel="stylesheet" href="/resources/css/bootstrap.css"></link>
+  <link href='/resources/css/common.css' rel='stylesheet' type='text/css'></link>
+  <link href='/resources/css/flipper.css' rel='stylesheet' type='text/css'></link>
+
+  <script src='/resources/lib/angular.js'></script>
+  <script src='/resources/js/ImageRotatorController.js'></script>
+  <script src='/resources/js/ImageRotatorDirective.js'></script>
 
   <style>
   .box{
@@ -34,6 +40,7 @@
     border: 1px solid black;
     background-color: green;
     height: 100%;
+    padding: 0px;
   }
   .item-b {
     border: 1px solid black;
@@ -48,37 +55,37 @@
 </style>
 </head>
 
-<body>
+<body ng-app="MainApp">
   <div class="box" style="margin: auto; margin-top: 10px">
-    <div class="content">
+    <div ng-controller="ImageRotatorController" class="content">
       <div class="fluid-row img-row">
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
       </div>
 
       <div class="fluid-row main-row">
         <div class="col-xs-2 fluid-row" style="padding: 0px">
-          <div class="col-xs-12 bookend-box item-a"></div>
-          <div class="col-xs-12 bookend-box item-a"></div>
+          <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
+          <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
         </div>
         <div class="col-xs-8 item-b"></div>
         <div class="col-xs-2 fluid-row" style="padding: 0px">
-          <div class="col-xs-12 bookend-box item-a"></div>
-          <div class="col-xs-12 bookend-box item-a"></div>
+          <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
+          <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
         </div>
       </div>
 
       <div class="fluid-row img-row">
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
-        <div class="col-xs-2 item-a"></div>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator class="col-xs-2 item-a"></image-rotator>
       </div>
 
     </div>
