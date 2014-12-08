@@ -1,11 +1,17 @@
 (function() {
   var app = angular.module('MainApp', []);
 
-  app.controller('ImageRotatorController', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
+  app.controller('ImageRotatorController', ['$scope', '$timeout', '$http',
+    function($scope, $timeout, $http) {
       //Fields
       var registeredDirectives = [];
       var registeredDirectiveRotation = {};
-      
+
+      $scope.$watch($scope.state, function (newState) {
+        console.log("Got state update, it is ", newState);
+        $scope.state = newState;
+      });
+
       var imageChanger = function(directiveToUpdate, $scope) {
         function getNewImage(images, curFrontImage, curBackImage) {
           var newImage = images[Math.floor(Math.random() * images.length)];

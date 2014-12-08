@@ -1,5 +1,5 @@
 (function() {
-  var app = angular.module('MainApp', []);
+  var app = angular.module('MainApp');
 
   app.controller('ProposalDialogController', ['$scope', function($scope) {
     console.log("Creating proposal dialog controller");

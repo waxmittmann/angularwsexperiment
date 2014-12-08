@@ -4,9 +4,40 @@
   <link href='/resources/css/common.css' rel='stylesheet' type='text/css'></link>
   <link href='/resources/css/flipper.css' rel='stylesheet' type='text/css'></link>
 
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  
   <script src='/resources/lib/angular.js'></script>
   <script src='/resources/js/ImageRotatorController.js'></script>
   <script src='/resources/js/ImageRotatorDirective.js'></script>
+  <script src='/resources/js/PDialogCtrl.js'></script>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+  $(document).ready(function() {
+    var socket = io();
+
+    socket.on('stateChange', function(msg){
+      console.log("State Changed ", msg);
+
+      var color;
+      if(msg === 'state1') {
+        color = 'white';
+        $('#image-rotator-controller').attr('state', 'initial');
+      } else if(msg === 'state2') {
+        color = 'yellow';
+        $('#image-rotator-controller').attr('state', 'question');
+      } else if(msg === 'state3') {
+        color = 'green';
+        $('#image-rotator-controller').attr('state', 'answer');
+      } else {
+        console.log("Don't understand msg");
+      }
+
+      $('body').css('background-color', color);
+    });
+  });
+  </script>
 
   <style>
   .box{
@@ -52,12 +83,17 @@
     height: 50%;
   }
 
+  .pdialog {
+    width: 100%;
+    height: 100%;
+  }
+
 </style>
 </head>
 
 <body ng-app="MainApp">
   <div class="box" style="margin: auto; margin-top: 10px">
-    <div ng-controller="ImageRotatorController" class="content">
+    <div id="image-rotator-controller" ng-controller="ImageRotatorController" class="content" state="initial">
       <div class="fluid-row img-row">
         <image-rotator class="col-xs-2 item-a"></image-rotator>
         <image-rotator class="col-xs-2 item-a"></image-rotator>
@@ -72,7 +108,9 @@
           <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
           <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
         </div>
-        <div class="col-xs-8 item-b"></div>
+        <div class="col-xs-8 item-b">
+          <proposal-dialog class='pdialog'></proposal-dialog>
+        </div>
         <div class="col-xs-2 fluid-row" style="padding: 0px">
           <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
           <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
