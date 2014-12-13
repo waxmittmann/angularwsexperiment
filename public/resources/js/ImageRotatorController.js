@@ -13,6 +13,13 @@
       });
 
       var imageChanger = function(directiveToUpdate, $scope) {
+        var newImageA = getNewImage($scope.images, directiveToUpdate.imageDataA, directiveToUpdate.imageDataB);
+        var newImageB = getNewImage($scope.images, directiveToUpdate.imageDataA, directiveToUpdate.imageDataB);
+        directiveToUpdate.setup(newImageA, newImageB);
+        directiveToUpdate.changeImage(newImageA);
+        directiveToUpdate.changeImage(newImageA);
+        directiveToUpdate.changeImage(newImageA);
+        
         function getNewImage(images, curFrontImage, curBackImage) {
           var newImage = images[Math.floor(Math.random() * images.length)];
           while(newImage == curFrontImage || newImage == curBackImage) {
@@ -25,50 +32,17 @@
           return Math.floor(2000 + Math.random() * 2000);
         }
 
-        function flipToNext(directiveToUpdate, newImage) {
-          var extraClasses;
-          if(directiveToUpdate.currentlyFlipped) {
-              directiveToUpdate.imageData = newImage;
-              extraClasses = "";
-          } else {
-              directiveToUpdate.backImageData = newImage;
-              extraClasses = "flip180";
-          }
-          setupTimeoutForNextFlip(directiveToUpdate, extraClasses);
-        }
-
-        function setupInitialFlip(directiveToUpdate, frontImage, backImage) {
-          console.log("Initial flip");
-          directiveToUpdate.imageData = frontImage;
-          directiveToUpdate.backImageData = backImage;
-          directiveToUpdate.currentlyFlipped = false;
-          var extraClasses = "flip180";
-          setupTimeoutForNextFlip(directiveToUpdate, extraClasses);
-        }
-
-        function setupTimeoutForNextFlip(directiveToUpdate, extraClasses) {
-          $timeout(function() {
-            directiveToUpdate.currentlyFlipped = !directiveToUpdate.currentlyFlipped;
-            directiveToUpdate.extraClasses = extraClasses;
-            $timeout(changeImages, getTimeToNext());
-          }, getTimeToNext());
-        }
-
         var changeImages = function() {
+          console.log("ChangeImages called");
           try {
             if($scope.images !== "undefined") {
-              var firstRun = typeof directiveToUpdate.imageData === "undefined";
-              if(firstRun) {
-                var newImage1 = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
-                var newImage2 = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
-                setupInitialFlip(directiveToUpdate, newImage1, newImage2);
-              } else {
-                var newImage = getNewImage($scope.images, directiveToUpdate.imageData, directiveToUpdate.backImageData);
-                flipToNext(directiveToUpdate, newImage);
-              }
+              console.log("Pre-change");
+              var newImage = getNewImage($scope.images, directiveToUpdate.imageDataA, directiveToUpdate.imageDataB);
+              directiveToUpdate.changeImage(newImage);
+              $timeout(changeImages, getTimeToNext());
             }
           } catch (err) {
-            //Ignore
+            console.log(err);
           }
         };
         changeImages();
