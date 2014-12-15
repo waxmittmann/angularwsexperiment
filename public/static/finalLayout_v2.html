@@ -5,7 +5,7 @@
   <link href='/resources/css/flipper.css' rel='stylesheet' type='text/css'></link>
 
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-  
+
   <script src='/resources/lib/angular.js'></script>
   <script src='/resources/js/ImageRotatorController.js'></script>
   <script src='/resources/js/ImageRotatorDirective.js'></script>
@@ -17,19 +17,33 @@
   $(document).ready(function() {
     var socket = io();
 
+    function changeState(state) {
+      console.log("Trying to change state to ", state);
+      var scope = angular.element($("#image-rotator-controller")).scope();
+      scope.$apply(function(){
+        scope.state = state;
+      })
+    }
+
     socket.on('stateChange', function(msg){
       console.log("State Changed ", msg);
 
       var color;
       if(msg === 'state1') {
         color = 'white';
-        $('#image-rotator-controller').attr('state', 'initial');
+        console.log('state1');
+        //$('#image-rotator-controller').attr('state', 'initial');
+        changeState('initial');
       } else if(msg === 'state2') {
         color = 'yellow';
-        $('#image-rotator-controller').attr('state', 'question');
+        console.log('state2');
+        // $('#image-rotator-controller').attr('state', 'question');
+        changeState('question');
       } else if(msg === 'state3') {
         color = 'green';
-        $('#image-rotator-controller').attr('state', 'answer');
+        console.log('state3');
+        // $('#image-rotator-controller').attr('state', 'answer');
+        changeState('answer');
       } else {
         console.log("Don't understand msg");
       }
