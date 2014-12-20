@@ -19,39 +19,79 @@
 
       var imageSwitcher = function() {
         var randomSwitcher = (function() {
-          function getRandomDirective() {
-            var at = Math.floor(Math.random() * registeredDirectives.length);
-            console.log("Got " + at + " with length of " + registeredDirectives.length);
-            return registeredDirectives[at];
+          // function getRandomDirective() {
+          //   var at = Math.floor(Math.random() * registeredDirectives.length);
+          //   console.log("Got " + at + " with length of " + registeredDirectives.length);
+          //   return registeredDirectives[at];
+          // }
+
+          function getImageOrder() {
+            console.log("Getting image order");
+            var directivesLeft = registeredDirectives.slice(0);
+            var imageOrder = [];
+            while(directivesLeft.length > 0) {
+              var at = Math.floor(Math.random() * directivesLeft.length);
+              imageOrder.push(directivesLeft[at]);
+              // directivesLeft.remove(at);
+              directivesLeft.splice(at, 1);
+            }
+            console.log("Image order that will be returned is ", imageOrder);
+            return imageOrder;
+          }
+
+          function executeImageSwitches(imageOrder) {
+            console.log("Executing image switches with order: ", imageOrder, ". Total directives: ", registeredDirectives.length);
+            // for(var i = 0; i < imageOrder.length; i++) {
+            //   var image = $scope.images[Math.floor(Math.random() * $scope.images.length)];
+            //   imageOrder[i].changeImage(image);
+            // }
+            if(imageOrder.length == 0) {
+              console.log("All done with switches");
+              $timeout(changeImage, 500);
+            } else {
+              console.log("Switching1");
+              var image = $scope.images[Math.floor(Math.random() * $scope.images.length)];
+              console.log("Switching2");
+              var at = Math.floor(Math.random() * imageOrder.length);
+              console.log("Switching3");
+              imageOrder[at].changeImage(image);
+              console.log("Switching4");
+              // imageOrder.remove(i);
+              imageOrder.splice(at, 1);
+              console.log("Switching5");
+              $timeout(
+                function() {
+                  executeImageSwitches(imageOrder);
+                },
+                500);
+            }
+            // getRandomDirective().changeImage(image);
           }
 
           return {
             'switch': function() {
-              var image = $scope.images[Math.floor(Math.random() * $scope.images.length)];
-              getRandomDirective().changeImage(image);
+              var imageOrder = getImageOrder();
+              executeImageSwitches(imageOrder);
             }
           };
-        })();
+        });
 
         var questionSwitcher = (function() {
-
+          $timeout(changeImage, 100);
         })();
 
         var answerSwitcher = (function() {
-
+          $timeout(changeImage, 100);
         }());
 
         var changeImage = function() {
             console.log("ChangeImage");
             if($scope.state == 'initial') {
-              randomSwitcher.switch();
-              $timeout(changeImage, 500);
+              randomSwitcher().switch();
             } else if($scope.state == 'question') {
               questionSwitcher.switch();
-              $timeout(changeImage, 100);
             } else if($scope.state == 'answer') {
               answerSwitcher.switch();
-              $timeout(changeImage, 100);
             } else {
               $timeout(changeImage, 2000);
               throw "Bad state " + $scope.state;
