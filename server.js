@@ -37,19 +37,19 @@ app.get('/images', function(req, res) {
     var imagesJSON = {};
     // imagesJSON['initial'] = readImageDirAsArray('/public/', 'resources/images/initialImages');
     // imagesJSON['question'] = readImageDirAsArray('/public/', 'resources/images/questionImages');
-    var initialPromise = readImageDirAsArray('/public/', 'resources/images/initialImages');
-    var questionPromise = readImageDirAsArray('/public/', 'resources/images/questionImages');
+    var initialPromise = readImageDirAsArray('/public/', 'resources/images/initialImages/');
+    var questionPromise = readImageDirAsArray('/public/', 'resources/images/questionImages/');
 
     var promise = q.all([initialPromise, questionPromise]);
     promise.spread(function(initialImages, questionImages) {
+      console.log("Imgs: ", initialImages, " ", questionImages);
       imagesJSON['initial'] = initialImages;
-      imagesJSON['question'] = questionImages;      
+      imagesJSON['question'] = questionImages;
       console.log("Pre-done");
       console.log("ImagesJson is " + imagesJSON);
-      console.log("Done with ", imagesJSON['initial'], ' and ', imagesJSON['question']);
+      // console.log("Done with ", imagesJSON['initial'], ' and ', imagesJSON['question']);
       res.end(JSON.stringify(imagesJSON));
     });
-
 });
 
 // app.get('/images', function(req, res) {

@@ -9,17 +9,17 @@
       var registeredDirectiveRotation = {};
       $scope.state = "initial";
 
-      var getRandomImage = function() {
-        return $scope.images[Math.floor(Math.random() * $scope.images.length)];
+      var getRandomImage = function(images) {
+        return images[Math.floor(Math.random() * images.length)];
       }
 
-      var imageSetup = function() {
+      var imageSetup = function(images) {
           for(var i = 0; i < registeredDirectives.length; i++) {
-            registeredDirectives[i].setup(getRandomImage(), getRandomImage());
+            registeredDirectives[i].setup(getRandomImage(images), getRandomImage(images));
           }
       };
 
-      var imageSwitcher = function() {
+      var imageSwitcher = function(images) {
         var randomSwitcher = function(images, activeState) {
           function getImageOrder() {
             console.log("Getting image order");
@@ -77,11 +77,11 @@
         };
 
         var changeImage = function() {
-            console.log("ChangeImage");
+            console.log("ChangeImage with ", images);
             if($scope.state == 'initial') {
-              randomSwitcher($scope.images['initial'], 'initial').switch();
+              randomSwitcher(images['initial'], 'initial').switch();
             } else if($scope.state == 'question') {
-              questionSwitcher($scope.images['question'], 'question').switch();
+              questionSwitcher(images['question'], 'question').switch();
             } else if($scope.state == 'answer') {
               answerSwitcher('answer').switch();
             } else {
@@ -108,9 +108,11 @@
       function loadImages() {
         $http.get('/images')
           .success(function(data, status, headers, config) {
+            console.log("Got data ", data);
               $scope.images = data;
-              imageSetup();
-              imageSwitcher();
+              console.log("Images are ",data['initial'], " ", data['question'])
+              imageSetup($scope.images['initial']);
+              imageSwitcher($scope.images);
               if(debug)
                 console.log("Had success with " + data);
           }).
