@@ -20,7 +20,7 @@
       };
 
       var imageSwitcher = function() {
-        var randomSwitcher = function(activeState) {
+        var randomSwitcher = function(images, activeState) {
           function getImageOrder() {
             console.log("Getting image order");
             var directivesLeft = registeredDirectives.slice(0);
@@ -41,7 +41,7 @@
               $timeout(changeImage, 500);
             } else {
               console.log("Switching");
-              var image = $scope.images[Math.floor(Math.random() * $scope.images.length)];
+              var image = images[Math.floor(Math.random() * images.length)];
               imageOrder[0].changeImage(image);
               imageOrder.splice(0, 1);
               $timeout(
@@ -79,9 +79,9 @@
         var changeImage = function() {
             console.log("ChangeImage");
             if($scope.state == 'initial') {
-              randomSwitcher('initial').switch();
+              randomSwitcher($scope.images['initial'], 'initial').switch();
             } else if($scope.state == 'question') {
-              questionSwitcher('question').switch();
+              questionSwitcher($scope.images['question'], 'question').switch();
             } else if($scope.state == 'answer') {
               answerSwitcher('answer').switch();
             } else {
