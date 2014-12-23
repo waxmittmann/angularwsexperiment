@@ -79,13 +79,6 @@
           }
 
           start();
-
-          // return {
-          //   'switch': function() {
-          //     var imageOrder = getImageOrder();
-          //     executeImageSwitches(imageOrder);
-          //   }
-          // };
         };
 
         var questionSwitcher = function(images, activeState) {
@@ -99,10 +92,25 @@
           function getImageOrder() {
             console.log("Generating image order from ", images, " first is ", images['Will_0.png']);
             var imageOrder = [];
-            imageOrder.push(createDirectiveImageObj('directive1', images['Will_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive2', images['Will_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive3', images['Will_2.png']));
-            imageOrder.push(createDirectiveImageObj('directive4', images['Will_3.png']));
+            var at = 1;
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Will_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Will_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Will_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Will_3.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['You_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['You_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['You_2.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Marry_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Marry_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Marry_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Marry_3.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Marry_4.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Me_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive' + (at++), images['Me_1.png']));
+
             return imageOrder;
           }
 
@@ -128,13 +136,6 @@
             executeImageSwitches(imageOrder);
           }
           start();
-
-          // return {
-          //   'switch': function() {
-          //     var imageOrder = getImageOrder();
-          //     executeImageSwitches(imageOrder);
-          //   }
-          // }
         };
 
         var answerSwitcher = function() {
@@ -146,21 +147,6 @@
           'answerSwitcher': answerSwitcher,
           'randomSwitcher': randomSwitcher
         };
-
-        // var changeImage = function() {
-        //     console.log("ChangeImage with ", images);
-        //     if($scope.state == 'initial') {
-        //       randomSwitcher(images['initial'], 'initial').switch();
-        //     } else if($scope.state == 'question') {
-        //       questionSwitcher(images['question'], 'question').switch();
-        //     } else if($scope.state == 'answer') {
-        //       answerSwitcher('answer').switch();
-        //     } else {
-        //       $timeout(changeImage, 2000);
-        //       throw "Bad state " + $scope.state;
-        //     }
-        // };
-        // changeImage();
       };
 
       //Methods
