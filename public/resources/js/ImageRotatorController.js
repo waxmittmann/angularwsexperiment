@@ -155,9 +155,60 @@
           start();
         };
 
-        var answerSwitcher = function() {
-          $timeout(changeImage, 100);
-        };
+        var answerSwitcher = function(images, activeState) {
+          function createDirectiveImageObj(directiveName, image) {
+            return {
+              'directive': registeredDirectivesByName[directiveName],
+              'image': image
+            };
+          }
+
+          function getImageOrder() {
+            console.log("Generating image order from ", images, " first is ", images['Will_0.png']);
+            var imageOrder = [];
+            imageOrder.push(createDirectiveImageObj('directive1_1', images['Yes_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_2', images['Yes_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_3', images['Yes_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_4', images['ExclamationMark.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive2_6', images['Shi.png']));
+            imageOrder.push(createDirectiveImageObj('directive3_6', images['ExclamationMark.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive4_3', images['Ja_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_4', images['Ja_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_5', images['ExclamationMark.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive3_1', images['Heart0_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive3_2', images['Heart0_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_2', images['Heart1_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_1', images['Heart1_0.png']));
+
+            return imageOrder;
+          }
+
+
+          function executeImageSwitches(imageOrder) {
+            if(imageOrder.length == 0 || $scope.state != activeState) {
+              console.log("All done with switches");
+              //$timeout(changeImage, 500);
+            } else {
+              console.log("Switching");
+              imageOrder[0].directive.changeImage(imageOrder[0].image);
+              imageOrder.splice(0, 1);
+              $timeout(
+                function() {
+                  executeImageSwitches(imageOrder);
+                },
+                500);
+              }
+            }
+
+            function start() {
+              var imageOrder = getImageOrder();
+              executeImageSwitches(imageOrder);
+            }
+            start();
+          };
 
         // var start = function() {
         //   $scope.imageSwitcher.randomSwitcher($scope.images['initial'], 'initial');

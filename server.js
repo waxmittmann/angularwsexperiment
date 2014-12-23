@@ -60,12 +60,14 @@ app.get('/images', function(req, res) {
     var imagesJSON = {};
     var initialPromise = readImageDirAsArray('/public/', 'resources/images/initialImages/');
     var questionPromise = readImageDirAsMap('/public/', 'resources/images/questionImages/');
+    var answerPromise = readImageDirAsMap('/public/', 'resources/images/answerImages/');
 
-    var promise = q.all([initialPromise, questionPromise]);
-    promise.spread(function(initialImages, questionImages) {
+    var promise = q.all([initialPromise, questionPromise, answerPromise]);
+    promise.spread(function(initialImages, questionImages, answerImages) {
       console.log("Imgs: ", initialImages, " ", questionImages);
       imagesJSON['initial'] = initialImages;
       imagesJSON['question'] = questionImages;
+      imagesJSON['answer'] = answerImages;
       console.log("Pre-done");
       console.log("ImagesJson is " + imagesJSON);
       res.end(JSON.stringify(imagesJSON));
