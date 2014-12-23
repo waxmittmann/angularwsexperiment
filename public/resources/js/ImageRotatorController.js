@@ -7,25 +7,33 @@
       //Fields
       var registeredDirectives = [];
       var registeredDirectivesByName = {};
-      $scope.state = "initial";
-      $scope.previousState = "initial";
+      $scope.state = "unset";
+      $scope.previousState = "unset";
 
       $scope.$watch('state', function() {
         console.log("State changed to '", $scope.state, "'");
+        switchByState();
+      });
+
+      var switchByState = function() {
         if($scope.state == $scope.previousState) {
+          console.log("State ", $scope.state, " unchanged");
           return;
         }
         $scope.previousState = $scope.state;
         if($scope.state == 'initial') {
+          console.log("State changed to initial");
           $scope.imageSwitcher.randomSwitcher($scope.images['initial'], 'initial');
         } else if($scope.state == 'question') {
+          console.log("State changed to question");
           $scope.imageSwitcher.questionSwitcher($scope.images['question'], 'question');
         } else if($scope.state == 'answer') {
+          console.log("State changed to answer");
           $scope.imageSwitcher.answerSwitcher($scope.images['answer'], 'answer');
         } else {
           throw "Unknown state " + state;
         }
-      });
+      }
 
       var getRandomImage = function(images) {
         return images[Math.floor(Math.random() * images.length)];
@@ -93,23 +101,32 @@
             console.log("Generating image order from ", images, " first is ", images['Will_0.png']);
             var imageOrder = [];
             var at = 1;
-            imageOrder.push(createDirectiveImageObj('directive1_1', images['Will_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_2', images['Will_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_3', images['Will_2.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_4', images['Will_3.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_1', images['Will_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_2', images['Will_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_3', images['Will_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_4', images['Will_3.png']));
 
-            imageOrder.push(createDirectiveImageObj('directive1_6', images['You_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive2_6', images['You_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive3_6', images['You_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_5', images['You_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_5', images['You_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive3_5', images['You_2.png']));
 
-            imageOrder.push(createDirectiveImageObj('directive4_1', images['Marry_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_2', images['Marry_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_3', images['Marry_2.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_4', images['Marry_3.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_5', images['Marry_4.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_1', images['Marry_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_2', images['Marry_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_3', images['Marry_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_4', images['Marry_3.png']));
+            // imageOrder.push(createDirectiveImageObj('directive1_5', images['Marry_4.png']));
 
             imageOrder.push(createDirectiveImageObj('directive2_2', images['Me_0.png']));
             imageOrder.push(createDirectiveImageObj('directive3_2', images['Me_1.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive2_1', images['heart.jpg']));
+            imageOrder.push(createDirectiveImageObj('directive3_1', images['heart.jpg']));
+
+            imageOrder.push(createDirectiveImageObj('directive4_5', images['heart.jpg']));
+            imageOrder.push(createDirectiveImageObj('directive4_6', images['heart.jpg']));
+            imageOrder.push(createDirectiveImageObj('directive3_6', images['heart.jpg']));
+            imageOrder.push(createDirectiveImageObj('directive2_6', images['heart.jpg']));
+            imageOrder.push(createDirectiveImageObj('directive1_6', images['heart.jpg']));
 
             return imageOrder;
           }
@@ -142,6 +159,11 @@
           $timeout(changeImage, 100);
         };
 
+        // var start = function() {
+        //   $scope.imageSwitcher.randomSwitcher($scope.images['initial'], 'initial');
+        //   switchByState();
+        // }
+
         return {
           'questionSwitcher': questionSwitcher,
           'answerSwitcher': answerSwitcher,
@@ -163,26 +185,76 @@
         };
       }
 
-      function loadImages() {
+      var getState = function(next) {
+        console.log("get state called");
+        $http.get('/state')
+        .success(function(data) {
+          console.log("get state executed, got ", data);
+          $scope.state = data['state'];
+          switchByState();
+          // $scope.$digest();
+          // next();
+        })
+        .error(function(data, status, headers, config) {
+          throw "Had error with status: " + status;
+        });
+      }
+
+      var getImages = function(next) {
+        console.log("get images called");
         $http.get('/images')
-          .success(function(data, status, headers, config) {
-            console.log("Got data ", data);
-              $scope.images = data;
-              console.log("Images are ",data['initial'], " ", data['question'])
-              imageSetup($scope.images['initial']);
-              $scope.imageSwitcher = imageSwitcher();
-              $scope.imageSwitcher.randomSwitcher($scope.images['initial'], 'initial');
-              if(debug)
-                console.log("Had success with " + data);
-          }).
-          error(function(data, status, headers, config) {
+        .success(function(data, status, headers, config) {
+          console.log("get images executed");
+          console.log("Got data ", data);
+            $scope.images = data;
+            console.log("Images are ",data['initial'], " ", data['question'])
+            imageSetup($scope.images['initial']);
+            $scope.imageSwitcher = imageSwitcher();
+            // $scope.imageSwitcher.start();
+            // $scope.imageSwitcher.randomSwitcher($scope.images['initial'], 'initial');
+            // switchByState();
+            if(debug) {
+              console.log("Had success with " + data);
+            }
+            next();
+          }
+          )
+          .error(function(data, status, headers, config) {
             throw "Had error with status: " + status;
           });
       }
 
+
+      function setup() {
+        console.log("Setup called");
+        getImages(getState);
+        // getState(getImages);
+
+      //   $http.get('/state')
+      //     .success()
+      //     error(function(data, status, headers, config) {
+      //       throw "Had error with status: " + status;
+      //     });
+      //
+      //   $http.get('/images')
+      //     .success(function(data, status, headers, config) {
+      //       console.log("Got data ", data);
+      //         $scope.images = data;
+      //         console.log("Images are ",data['initial'], " ", data['question'])
+      //         imageSetup($scope.images['initial']);
+      //         $scope.imageSwitcher = imageSwitcher();
+      //         $scope.imageSwitcher.randomSwitcher($scope.images['initial'], 'initial');
+      //         if(debug)
+      //           console.log("Had success with " + data);
+      //     }).
+      //     error(function(data, status, headers, config) {
+      //       throw "Had error with status: " + status;
+      //     });
+      }
+
       //Main stuff
       createApi();
-      loadImages();
+      setup();
     }
   ]);
 })();
