@@ -7,7 +7,7 @@
       scope.facingSide = "front";
 
       scope.changeImage = function(imageData) {
-
+        console.log("And now it is ", scope.api);
         if(scope.facingSide === "front") {
           if(debug)
             console.log("Setting front ", scope.id, " to ", imageData);
@@ -31,7 +31,7 @@
         scope.facingSide = "front";
       };
 
-      scope.id = scope.api.registerForImages(scope.this);
+      scope.id = scope.$parent.api.registerForImages(scope.this);
     }
 
     return {
@@ -39,7 +39,9 @@
       , replace: 'true'
       , templateUrl: './resources/partials/imageRotatorPartial.html'
       , link: linkFunction
-      , scope : true
+      , scope : {
+        'name': '@'
+      }
     };
   }
   ]);

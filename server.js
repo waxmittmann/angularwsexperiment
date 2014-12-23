@@ -29,6 +29,29 @@ function readImageDirAsArray(publicPath, imagePath) {
   return deferred.promise;
 }
 
+function readImageDirAsMap(publicPath, imagePath) {
+  var deferred = q.defer();
+  fs.readdir(__dirname + publicPath + imagePath, function(err, filenames) {
+    if(err)
+      {
+        console.log("Error is ", err);
+        q.reject(err);
+        // throw err;
+      }
+      var subImages = {};
+      for(var i = 0; i < filenames.length; i++) {
+        subImages[filenames[i]] = {
+          'src': imagePath + filenames[i],
+          'name': filenames[i]
+        };
+      }
+      console.log("SubImages ", filenames.length);
+      deferred.resolve(subImages);
+      // return subImages;
+    });
+    return deferred.promise;
+}
+
 //Init image stuff
 app.get('/images', function(req, res) {
     console.log("Image called");
@@ -38,7 +61,7 @@ app.get('/images', function(req, res) {
     // imagesJSON['initial'] = readImageDirAsArray('/public/', 'resources/images/initialImages');
     // imagesJSON['question'] = readImageDirAsArray('/public/', 'resources/images/questionImages');
     var initialPromise = readImageDirAsArray('/public/', 'resources/images/initialImages/');
-    var questionPromise = readImageDirAsArray('/public/', 'resources/images/questionImages/');
+    var questionPromise = readImageDirAsMap('/public/', 'resources/images/questionImages/');
 
     var promise = q.all([initialPromise, questionPromise]);
     promise.spread(function(initialImages, questionImages) {

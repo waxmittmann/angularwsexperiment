@@ -14,17 +14,17 @@
 
     $('#initial').click(function() {
       console.log("Inside initial submit");
-      socket.emit('stateChange', 'state1');
+      socket.emit('stateChange', 'initial');
     });
 
     $('#second').click(function() {
       console.log("Inside second submit");
-      socket.emit('stateChange', 'state2');
+      socket.emit('stateChange', 'question');
     });
 
     $('#final').click(function() {
       console.log("Inside final submit");
-      socket.emit('stateChange', 'state3');
+      socket.emit('stateChange', 'answer');
     });
 
   });

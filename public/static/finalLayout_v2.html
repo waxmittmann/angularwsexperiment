@@ -17,38 +17,12 @@
   $(document).ready(function() {
     var socket = io();
 
-    function changeState(state) {
-      console.log("Trying to change state to ", state);
+    socket.on('stateChange', function(state){
+      console.log("State before is '" + state + "'");
       var scope = angular.element($("#image-rotator-controller")).scope();
       scope.$apply(function(){
         scope.state = state;
-      })
-    }
-
-    socket.on('stateChange', function(msg){
-      console.log("State Changed ", msg);
-
-      var color;
-      if(msg === 'state1') {
-        color = 'white';
-        console.log('state1');
-        //$('#image-rotator-controller').attr('state', 'initial');
-        changeState('initial');
-      } else if(msg === 'state2') {
-        color = 'yellow';
-        console.log('state2');
-        // $('#image-rotator-controller').attr('state', 'question');
-        changeState('question');
-      } else if(msg === 'state3') {
-        color = 'green';
-        console.log('state3');
-        // $('#image-rotator-controller').attr('state', 'answer');
-        changeState('answer');
-      } else {
-        console.log("Don't understand msg");
-      }
-
-      $('body').css('background-color', color);
+      });
     });
   });
   </script>
@@ -109,35 +83,35 @@
   <div class="box" style="margin: auto; margin-top: 10px">
     <div id="image-rotator-controller" ng-controller="ImageRotatorController" class="content" state="initial">
       <div class="fluid-row img-row">
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive1' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive2' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive3' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive4' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive5' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive6' class="col-xs-2 item-a"></image-rotator>
       </div>
 
       <div class="fluid-row main-row">
         <div class="col-xs-2 fluid-row" style="padding: 0px">
-          <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
-          <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
+          <image-rotator name='directive6' class="col-xs-12 bookend-box item-a"></image-rotator>
+          <image-rotator name='directive7' class="col-xs-12 bookend-box item-a"></image-rotator>
         </div>
         <div class="col-xs-8 item-b">
           <proposal-dialog class='pdialog'></proposal-dialog>
         </div>
         <div class="col-xs-2 fluid-row" style="padding: 0px">
-          <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
-          <image-rotator class="col-xs-12 bookend-box item-a"></image-rotator>
+          <image-rotator name='directive8' class="col-xs-12 bookend-box item-a"></image-rotator>
+          <image-rotator name='directive9' class="col-xs-12 bookend-box item-a"></image-rotator>
         </div>
       </div>
 
       <div class="fluid-row img-row">
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
-        <image-rotator class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive10' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive11' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive12' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive13' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive14' class="col-xs-2 item-a"></image-rotator>
+        <image-rotator name='directive15' class="col-xs-2 item-a"></image-rotator>
       </div>
 
     </div>
