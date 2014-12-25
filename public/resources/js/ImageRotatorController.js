@@ -41,7 +41,10 @@
 
       var imageSetup = function(images) {
           for(var i = 0; i < registeredDirectives.length; i++) {
-            registeredDirectives[i].setup(getRandomImage(images), getRandomImage(images));
+            var front = getRandomImage(images);
+            var back = getRandomImage(images);
+            console.log("Setting registered directive ", i, " to ", front.src);
+            registeredDirectives[i].setup(front, back);
           }
       };
 

@@ -39,7 +39,7 @@
     return {
       restrict: 'AE'
       , replace: 'true'
-      , templateUrl: './resources/partials/imageRotatorPartial_v2.html'
+      , templateUrl: './resources/partials/imageRotatorPartial.html'
       , link: linkFunction
       , scope : {
         'name': '@'
