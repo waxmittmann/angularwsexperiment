@@ -5,6 +5,7 @@ var fs = require('fs');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var q = require('q');
+var path = require('path');
 
 function readImageDirAsArray(publicPath, imagePath) {
   var deferred = q.defer();
@@ -101,11 +102,38 @@ io.on('connection', function(socket){
 });
 // })();
 
+app.use('/resources', express.static(__dirname + '/public/resources'));
 
 //ROUTING
-app.use('/', express.static(__dirname + '/public/static'));
+// app.use('/', express.static(__dirname + '/public/static'));
+// app.use('/finalLayout_v9.html', express.static(__dirname + '/public/static'));
 
-app.use('/resources', express.static(__dirname + '/public/resources'));
+app.set('view engine', 'jade');
+app.set('views', __dirname + "/public/jade/");
+// app.use(app.router);
+app.all('*', function (req, res) {
+  console.log("Trying to render ", req.url + ".jade");
+  // res.render("./public/jade" + req.url, { title : 'Home' })
+  res.render("./" + req.url + ".jade", { title : 'Home' }
+  , function(err, html) {
+    console.log("Error: ", err);
+    console.log("Html : ", html);
+    res.end(html);
+  });
+  console.log("Post-render");
+});
+
+/*app.get('/index', function (req, res) {
+  console.log("Trying to render ", req.url);
+  // res.render("./public/jade" + req.url, { title : 'Home' })
+  res.render("./index.jade", { title : 'Home' });
+  // , function(err, html) {
+  //   console.log("Error: ", err);
+  //   console.log("Html : ", html);
+  //
+  // });
+  console.log("Post-render");
+});*/
 
 /// error handlers
 app.use(function(err, req, res, next) {

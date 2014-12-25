@@ -42,3 +42,6 @@ body {
 .no-margin-padding {
   margin: 0px;
   padding: 0px; }
+
+.img-row {
+  background-color: blue; }

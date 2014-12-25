@@ -34,10 +34,12 @@
 
 .auto-ratio-container {
   display: inline-block;
-  position: relative; }
+  position: relative;
+  margin: 0px;
+  padding: 0px; }
 
 .auto-ratio-dummy {
-  padding-top: 75%;
+  padding-top: 80%;
   /* 4:3 aspect ratio */ }
 
 .auto-ratio-element {

@@ -1,0 +1,162 @@
+doctype html
+html(lang="en")
+  head
+    link(rel="stylesheet", type='text/css', href="/resources/css/bootstrap.css")
+    link(rel="stylesheet", type='text/css', href='/resources/css/common.css')
+    link(rel="stylesheet", type='text/css', href='/resources/css/rotator.css')
+
+    script(src='http://code.jquery.com/jquery-1.11.1.js')    
+    script(src='/resources/lib/angular.js')    
+    script(src='/resources/js/ImageRotatorController.js')    
+    script(src='/resources/js/ImageRotatorDirective.js')    
+    script(src='/socket.io/socket.io.js')    
+    script(type='text/javascript').
+      $(document).ready(function() {
+        var socket = io();
+      
+        socket.on('stateChange', function(state){
+          console.log("State before is '" + state + "'");
+          var scope = angular.element($("#image-rotator-controller")).scope();
+          scope.$apply(function(){
+            scope.state = state;
+          });
+        });
+      });      
+
+    style.
+      .box{
+        position: relative;
+        width: 100%;		/* desired width */
+        max-width: 1200px;
+        min-width: 800px;
+      }
+      .box:before{
+        content: "";
+        display: block;
+        padding-top: 75%;
+      }
+      .content{
+        position:  absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: yellow;
+      }
+      .main-row {
+        /*height: 50%;*/
+        background-color: black;
+      }
+      .item-a {
+        /*border: 1px solid black;*/
+        background-color: green;
+        height: 100%;
+        padding: 0px;
+      }
+      .item-b {
+        /*border: 1px solid black;*/
+        background-color: orange;
+        /*height: 100%;*/
+      }          
+  body(ng-app="MainApp")
+    div(class="box", style="margin: auto; margin-top: 10px")
+      div(id="image-rotator-controller", ng-controller="ImageRotatorController", class="content", state="initial")
+        div(class="row img-row")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive1_1', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive1_2', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive1_3', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive1_4', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive1_5', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive1_6', class="item-a")
+                            
+        div(class="row main-row")      
+          div(class="col-xs-4 row", style="padding: 0px")
+            div(class="col-xs-12 row", style="padding: 0px")
+              div(class="row")
+                div(class="auto-ratio-container col-xs-6 no-margin-padding")
+                  div(class="auto-ratio-dummy")
+                  div(class="auto-ratio-element")
+                    image-rotator(name='directive2_1', class="col-xs-12 bookend-box item-a")
+                div(class="auto-ratio-container col-xs-6 no-margin-padding")
+                  div(class="auto-ratio-dummy")
+                  div(class="auto-ratio-element")
+                    image-rotator(name='directive2_2', class="col-xs-12 bookend-box item-a")
+              div(class="row")
+                div(class="auto-ratio-container col-xs-6 no-margin-padding")
+                  div(class="auto-ratio-dummy")
+                  div(class="auto-ratio-element")
+                    image-rotator(name='directive3_1', class="col-xs-12 bookend-box item-a")
+                div(class="auto-ratio-container col-xs-6 no-margin-padding")
+                  div(class="auto-ratio-dummy")
+                  div(class="auto-ratio-element")
+                    image-rotator(name='directive3_2', class="col-xs-12 bookend-box item-a")
+        
+          div(class="auto-ratio-container col-xs-4 item-b", style="padding: 0px")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='largeDirective', class="col-xs-12 item-a", style="padding: 0px")
+
+          div(class="col-xs-4 row", style="padding: 0px")      
+            div(class="col-xs-12 row", style="padding: 0px")
+              div(class="row")
+                div(class="auto-ratio-container col-xs-6 no-margin-padding")
+                  div(class="auto-ratio-dummy")
+                  div(class="auto-ratio-element")
+                    image-rotator(name='directive2_5', class="col-xs-12 bookend-box item-a")
+                div(class="auto-ratio-container col-xs-6 no-margin-padding")
+                  div(class="auto-ratio-dummy")
+                  div(class="auto-ratio-element")
+                    image-rotator(name='directive2_6', class="col-xs-12 bookend-box item-a")
+              div(class="row")
+                div(class="auto-ratio-container col-xs-6 no-margin-padding")
+                  div(class="auto-ratio-dummy")
+                  div(class="auto-ratio-element")
+                    image-rotator(name='directive3_5', class="col-xs-12 bookend-box item-a")
+                div(class="auto-ratio-container col-xs-6 no-margin-padding")
+                  div(class="auto-ratio-dummy")
+                  div(class="auto-ratio-element")
+                    image-rotator(name='directive3_6', class="col-xs-12 bookend-box item-a")
+        
+        div(class="row img-row")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive4_1', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive4_2', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive4_3', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive4_4', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive4_5', class="item-a")
+          div(class="auto-ratio-container col-xs-2")
+            div(class="auto-ratio-dummy")
+            div(class="auto-ratio-element")
+              image-rotator(name='directive4_6', class="item-a")

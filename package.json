@@ -34,6 +34,8 @@
   "dependencies": {
     "angular": "^1.2.23",
     "express": "^4.9.7",
+    "jade": "^1.8.2",
+    "path": "^0.4.9",
     "q": "^1.1.2",
     "serve-favicon": "^2.1.6",
     "socket.io": "^1.2.1",

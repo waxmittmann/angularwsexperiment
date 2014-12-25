@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+  head
+    title Socket.IO chat
+    script(src="http://code.jquery.com/jquery-1.11.1.js")
+    script(src="/socket.io/socket.io.js")
+    script.
+      $(document).ready(function() {
+        var socket = io();
+
+        $('form').submit(function(e){
+          return false;
+        });
+
+        $('#initial').click(function() {
+          console.log("Inside initial submit");
+          socket.emit('stateChange', 'initial');
+        });
+
+        $('#second').click(function() {
+          console.log("Inside second submit");
+          socket.emit('stateChange', 'question');
+        });
+
+        $('#final').click(function() {
+          console.log("Inside final submit");
+          socket.emit('stateChange', 'answer');
+        });
+
+      });
+  body
+    form
+      button(id='initial') Initial State
+      button(id='second') Second State
+      button(id='final') Final State
