@@ -1,0 +1,127 @@
+<html>
+<head>
+  <link rel="stylesheet" href="/resources/css/bootstrap.css"></link>
+  <link href='/resources/css/common.css' rel='stylesheet' type='text/css'></link>
+  <!-- <link href='/resources/css/flipper.css' rel='stylesheet' type='text/css'></link> -->
+  <link href='/resources/css/rotator.css' rel='stylesheet' type='text/css'></link>
+
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+  <script src='/resources/lib/angular.js'></script>
+  <script src='/resources/js/ImageRotatorController.js'></script>
+  <script src='/resources/js/ImageRotatorDirective.js'></script>
+  <script src='/resources/js/PDialogCtrl.js'></script>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+  $(document).ready(function() {
+    var socket = io();
+
+    socket.on('stateChange', function(state){
+      console.log("State before is '" + state + "'");
+      var scope = angular.element($("#image-rotator-controller")).scope();
+      scope.$apply(function(){
+        scope.state = state;
+      });
+    });
+  });
+  </script>
+
+  <style>
+  .box{
+    position: relative;
+    width: 100%;		/* desired width */
+    max-width: 1200px;
+    min-width: 800px;
+  }
+  .box:before{
+    content: "";
+    display: block;
+    padding-top: 75%;
+  }
+  .content{
+    position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: yellow;
+  }
+  .img-row {
+    height: 25%;
+    background-color: blue;
+  }
+  .main-row {
+    height: 50%;
+    background-color: black;
+  }
+  .item-a {
+    border: 1px solid black;
+    background-color: green;
+    /*height: 100%;*/
+    padding: 0px;
+  }
+  .item-b {
+    border: 1px solid black;
+    background-color: orange;
+    /*height: 100%;*/
+  }
+
+  .bookend-box {
+    height: 50%;
+  }
+
+</style>
+</head>
+
+<body ng-app="MainApp">
+  <div class="box" style="margin: auto; margin-top: 10px">
+    <div id="image-rotator-controller" ng-controller="ImageRotatorController" class="content" state="initial">
+      <div class="fluid-row img-row">
+        <div class="auto-ratio-container col-xs-2">
+          <div class="auto-ratio-dummy"></div>
+          <div class="auto-ratio-element">
+            <image-rotator name='directive1_1' class="item-a"></image-rotator>
+          </div>
+        </div>
+
+        <div class="auto-ratio-container col-xs-2" style='border: 1px solid black'>
+          <div class="auto-ratio-dummy"></div>
+          <div class="auto-ratio-element">
+
+          </div>
+        </div>
+
+        <div class="auto-ratio-container col-xs-2" style='border: 1px solid black'>
+          <div class="auto-ratio-dummy"></div>
+          <div class="auto-ratio-element">
+
+          </div>
+        </div>
+
+        <div class="auto-ratio-container col-xs-2" style='border: 1px solid black'>
+          <div class="auto-ratio-dummy"></div>
+          <div class="auto-ratio-element">
+
+          </div>
+        </div>
+
+        <div class="auto-ratio-container col-xs-2" style='border: 1px solid black'>
+          <div class="auto-ratio-dummy"></div>
+          <div class="auto-ratio-element">
+
+          </div>
+        </div>
+
+        <div class="auto-ratio-container col-xs-2" style='border: 1px solid black'>
+          <div class="auto-ratio-dummy"></div>
+          <div class="auto-ratio-element">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

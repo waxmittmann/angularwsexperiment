@@ -34,3 +34,11 @@ body {
 .inner {
   display: inline-block;
   text-align: left; }
+
+.fill-xy {
+  width: 100%;
+  height: 100%; }
+
+.no-margin-padding {
+  margin: 0px;
+  padding: 0px; }

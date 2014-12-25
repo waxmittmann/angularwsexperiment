@@ -13,13 +13,15 @@
             console.log("Setting front ", scope.id, " to ", imageData);
           scope.imageDataB = imageData.src;
           scope.facingSide = "back";
-          scope.extraClasses = "flip180";
+          // scope.extraClasses = "flip180";
+          scope.flipClass = "f1_container_flip";
         } else {
           if(debug)
             console.log("Setting back ", scope.id, " to ", imageData);
           scope.imageDataA = imageData.src;
           scope.facingSide = "front";
-          scope.extraClasses = "";
+          // scope.extraClasses = "";
+          scope.flipClass = "";
         }
       };
 
@@ -37,7 +39,7 @@
     return {
       restrict: 'AE'
       , replace: 'true'
-      , templateUrl: './resources/partials/imageRotatorPartial.html'
+      , templateUrl: './resources/partials/imageRotatorPartial_v2.html'
       , link: linkFunction
       , scope : {
         'name': '@'
