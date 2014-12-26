@@ -14,7 +14,6 @@ function readImageDirAsArray(publicPath, imagePath) {
     {
       console.log("Error is ", err);
       q.reject(err);
-      // throw err;
     }
     var subImages = [];
     for(var i = 0; i < filenames.length; i++) {
@@ -25,7 +24,6 @@ function readImageDirAsArray(publicPath, imagePath) {
     }
     console.log("SubImages ", filenames.length);
     deferred.resolve(subImages);
-    // return subImages;
   });
   return deferred.promise;
 }
@@ -37,7 +35,6 @@ function readImageDirAsMap(publicPath, imagePath) {
       {
         console.log("Error is ", err);
         q.reject(err);
-        // throw err;
       }
       var subImages = {};
       for(var i = 0; i < filenames.length; i++) {
@@ -48,7 +45,6 @@ function readImageDirAsMap(publicPath, imagePath) {
       }
       console.log("SubImages ", filenames.length);
       deferred.resolve(subImages);
-      // return subImages;
     });
     return deferred.promise;
 }
@@ -105,36 +101,53 @@ io.on('connection', function(socket){
 app.use('/resources', express.static(__dirname + '/public/resources'));
 
 //ROUTING
-// app.use('/', express.static(__dirname + '/public/static'));
-// app.use('/finalLayout_v9.html', express.static(__dirname + '/public/static'));
-
+var jadeDirectory =  __dirname + "/public/jade/";
 app.use(favicon(__dirname + '/public/resources/images/common/favicon.png'));
 app.set('view engine', 'jade');
-app.set('views', __dirname + "/public/jade/");
-// app.use(app.router);
+app.set('views', jadeDirectory);
+
+function renderIndex(req, res) {
+  res.render("./index.jade", { title : 'Home' }
+  , function(err, html) {
+    console.log("Error: ", err);
+    console.log("Html : ", html);
+    res.end(html);
+  });
+}
+
+app.get('/', function(req, res) {
+  renderIndex(req, res);
+});
+
+app.get('/index', function(req, res) {
+  renderIndex(req, res);
+});
+
+
 app.all('*', function (req, res) {
   console.log("Trying to render ", req.url + ".jade");
+  var file = jadeDirectory + req.url + ".jade";
+  fs.exists(file, function(exists) {
+    if (exists) {
+      console.log("Standard render");
+      render(req.url, res);
+    } else {
+      console.log("404 render");
+      render('404', res);
+    }
+  });
+});
+
+function render(url, res) {
   // res.render("./public/jade" + req.url, { title : 'Home' })
-  res.render("./" + req.url + ".jade", { title : 'Home' }
+  res.render("./" + url + ".jade", { title : 'Home' }
   , function(err, html) {
     console.log("Error: ", err);
     console.log("Html : ", html);
     res.end(html);
   });
   console.log("Post-render");
-});
-
-/*app.get('/index', function (req, res) {
-  console.log("Trying to render ", req.url);
-  // res.render("./public/jade" + req.url, { title : 'Home' })
-  res.render("./index.jade", { title : 'Home' });
-  // , function(err, html) {
-  //   console.log("Error: ", err);
-  //   console.log("Html : ", html);
-  //
-  // });
-  console.log("Post-render");
-});*/
+}
 
 /// error handlers
 app.use(function(err, req, res, next) {

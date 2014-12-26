@@ -1,6 +1,7 @@
 (function() {
   var debug = true;
-  var app = angular.module('MainApp', []);
+  //var app = angular.module('MainApp', []);
+  var app = angular.module('MainApp');
 
   app.controller('ImageRotatorController', ['$scope', '$timeout', '$http',
     function($scope, $timeout, $http) {
