@@ -108,6 +108,7 @@ app.use('/resources', express.static(__dirname + '/public/resources'));
 // app.use('/', express.static(__dirname + '/public/static'));
 // app.use('/finalLayout_v9.html', express.static(__dirname + '/public/static'));
 
+app.use(favicon(__dirname + '/public/resources/images/common/favicon.png'));
 app.set('view engine', 'jade');
 app.set('views', __dirname + "/public/jade/");
 // app.use(app.router);
