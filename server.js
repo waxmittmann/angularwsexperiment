@@ -56,7 +56,7 @@ app.get('/images', function(req, res) {
 
     var imagesJSON = {};
     var initialPromise = readImageDirAsArray('/public/', 'resources/images/initialImages/');
-    var questionPromise = readImageDirAsMap('/public/', 'resources/images/questionImages/');
+    var questionPromise = readImageDirAsMap('/public/', 'resources/images/questionImages_v2/');
     var answerPromise = readImageDirAsMap('/public/', 'resources/images/answerImages/');
 
     var promise = q.all([initialPromise, questionPromise, answerPromise]);

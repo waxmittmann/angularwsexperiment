@@ -105,36 +105,16 @@
             console.log("Generating image order from ", images, " first is ", images['Will_0.png']);
             var imageOrder = [];
             var at = 1;
-            imageOrder.push(createDirectiveImageObj('directive4_1', images['Will_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_2', images['Will_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_3', images['Will_2.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_4', images['Will_3.png']));
-
-            imageOrder.push(createDirectiveImageObj('directive1_5', images['You_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive2_5', images['You_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive3_5', images['You_2.png']));
-
-            imageOrder.push(createDirectiveImageObj('directive1_1', images['Marry_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_2', images['Marry_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_3', images['Marry_2.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_4', images['Marry_3.png']));
-            // imageOrder.push(createDirectiveImageObj('directive1_5', images['Marry_4.png']));
-
-            imageOrder.push(createDirectiveImageObj('directive2_2', images['Me_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive3_2', images['Me_1.png']));
-
-            imageOrder.push(createDirectiveImageObj('directive2_1', images['heart.jpg']));
-            imageOrder.push(createDirectiveImageObj('directive3_1', images['heart.jpg']));
-
-            imageOrder.push(createDirectiveImageObj('directive4_5', images['heart.jpg']));
-            imageOrder.push(createDirectiveImageObj('directive4_6', images['heart.jpg']));
-            imageOrder.push(createDirectiveImageObj('directive3_6', images['heart.jpg']));
-            imageOrder.push(createDirectiveImageObj('directive2_6', images['heart.jpg']));
-            imageOrder.push(createDirectiveImageObj('directive1_6', images['heart.jpg']));
-
+            imageOrder.push(createDirectiveImageObj('directive1_1', images['Will_0_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_1', images['Will_1_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_2', images['Will_0_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_2', images['Will_1_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_3', images['Will_0_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_3', images['Will_1_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_4', images['Will_0_3.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_4', images['Will_1_3.png']));
             return imageOrder;
           }
-
 
           function executeImageSwitches(imageOrder) {
             if(imageOrder.length == 0 || $scope.state != activeState) {
