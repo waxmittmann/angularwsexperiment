@@ -54,11 +54,20 @@
           function getImageOrder() {
             console.log("Getting image order");
             var directivesLeft = registeredDirectives.slice(0);
+            var imagesLeft = images.slice(0);
+
             var imageOrder = [];
             while(directivesLeft.length > 0) {
               var at = Math.floor(Math.random() * directivesLeft.length);
-              imageOrder.push(directivesLeft[at]);
+              //imageOrder.push(directivesLeft[at]);
+              var directiveAt = directivesLeft[at];
               directivesLeft.splice(at, 1);
+
+              at = Math.floor(Math.random() * imagesLeft.length);
+              var imageAt = imagesLeft[at];
+              imagesLeft.splice(at, 1);
+
+              imageOrder.push({'directive': directiveAt, 'image': imageAt});
             }
             console.log("Image order that will be returned is ", imageOrder);
             return imageOrder;
@@ -74,8 +83,11 @@
               $timeout(start, 500);
             } else { //We switch image
               console.log("Switching");
-              var image = images[Math.floor(Math.random() * images.length)];
-              imageOrder[0].changeImage(image);
+              var directiveAt = imageOrder[0].directive;
+              var imageAt = imageOrder[0].image;
+              directiveAt.changeImage(imageAt);
+              // var image = images[Math.floor(Math.random() * images.length)];
+              // imageOrder[0].changeImage(image);
               imageOrder.splice(0, 1);
               $timeout(
                 function() {
@@ -104,7 +116,6 @@
           function getImageOrder() {
             console.log("Generating image order from ", images, " first is ", images['Will_0.png']);
             var imageOrder = [];
-            var at = 1;
             imageOrder.push(createDirectiveImageObj('directive1_1', images['Will_0_0.png']));
             imageOrder.push(createDirectiveImageObj('directive2_1', images['Will_1_0.png']));
             imageOrder.push(createDirectiveImageObj('directive1_2', images['Will_0_1.png']));
@@ -113,6 +124,15 @@
             imageOrder.push(createDirectiveImageObj('directive2_3', images['Will_1_2.png']));
             imageOrder.push(createDirectiveImageObj('directive1_4', images['Will_0_3.png']));
             imageOrder.push(createDirectiveImageObj('directive2_4', images['Will_1_3.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive5_3', images['Marry_0_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_3', images['Marry_1_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_4', images['Marry_0_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_4', images['Marry_1_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_5', images['Marry_0_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_5', images['Marry_1_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_6', images['Marry_0_3.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_6', images['Marry_1_3.png']));
             return imageOrder;
           }
 
@@ -150,22 +170,63 @@
           function getImageOrder() {
             console.log("Generating image order from ", images, " first is ", images['Will_0.png']);
             var imageOrder = [];
-            imageOrder.push(createDirectiveImageObj('directive1_1', images['Yes_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_2', images['Yes_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_3', images['Yes_2.png']));
-            imageOrder.push(createDirectiveImageObj('directive1_4', images['ExclamationMark.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_1', images['Together_0_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_2', images['Together_0_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_3', images['Together_0_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_4', images['Together_0_3.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_5', images['Together_0_4.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_6', images['Together_0_5.png']));
 
-            imageOrder.push(createDirectiveImageObj('directive2_6', images['Shi.png']));
-            imageOrder.push(createDirectiveImageObj('directive3_6', images['ExclamationMark.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_1', images['Together_1_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_2', images['Together_1_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_3', images['Together_1_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_4', images['Together_1_3.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_5', images['Together_1_4.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_6', images['Together_1_5.png']));
 
-            imageOrder.push(createDirectiveImageObj('directive4_3', images['Ja_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_4', images['Ja_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_5', images['ExclamationMark.png']));
+            imageOrder.push(createDirectiveImageObj('directive3_1', images['Together_2_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_1', images['Together_3_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive3_2', images['Together_2_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_2', images['Together_3_1.png']));
 
-            imageOrder.push(createDirectiveImageObj('directive3_1', images['Heart0_0.png']));
-            imageOrder.push(createDirectiveImageObj('directive3_2', images['Heart0_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_2', images['Heart1_1.png']));
-            imageOrder.push(createDirectiveImageObj('directive4_1', images['Heart1_0.png']));
+            imageOrder.push(createDirectiveImageObj('largeDirective', images['Together_Middle.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive3_5', images['Together_2_4.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_5', images['Together_3_4.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive3_6', images['Together_2_5.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_6', images['Together_3_5.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive5_1', images['Together_4_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_2', images['Together_4_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_3', images['Together_4_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_4', images['Together_4_3.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_5', images['Together_4_4.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_6', images['Together_4_5.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive6_1', images['Together_5_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_2', images['Together_5_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_3', images['Together_5_2.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_4', images['Together_5_3.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_5', images['Together_5_4.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_6', images['Together_5_5.png']));
+
+            // imageOrder.push(createDirectiveImageObj('directive1_1', images['Yes_0.png']));
+            // imageOrder.push(createDirectiveImageObj('directive1_2', images['Yes_1.png']));
+            // imageOrder.push(createDirectiveImageObj('directive1_3', images['Yes_2.png']));
+            // imageOrder.push(createDirectiveImageObj('directive1_4', images['ExclamationMark.png']));
+            //
+            // imageOrder.push(createDirectiveImageObj('directive2_6', images['Shi.png']));
+            // imageOrder.push(createDirectiveImageObj('directive3_6', images['ExclamationMark.png']));
+            //
+            // imageOrder.push(createDirectiveImageObj('directive4_3', images['Ja_0.png']));
+            // imageOrder.push(createDirectiveImageObj('directive4_4', images['Ja_1.png']));
+            // imageOrder.push(createDirectiveImageObj('directive4_5', images['ExclamationMark.png']));
+            //
+            // imageOrder.push(createDirectiveImageObj('directive3_1', images['Heart0_0.png']));
+            // imageOrder.push(createDirectiveImageObj('directive3_2', images['Heart0_1.png']));
+            // imageOrder.push(createDirectiveImageObj('directive4_2', images['Heart1_1.png']));
+            // imageOrder.push(createDirectiveImageObj('directive4_1', images['Heart1_0.png']));
 
             return imageOrder;
           }
