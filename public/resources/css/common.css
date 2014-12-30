@@ -45,3 +45,12 @@ body {
 
 .img-row {
   background-color: blue; }
+
+.black-background {
+  background-color: black; }
+
+.white-background {
+  background-color: white; }
+
+.auto-margin {
+  margin: auto; }

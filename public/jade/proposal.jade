@@ -1,0 +1,41 @@
+doctype html
+html(lang="en")
+  head
+    title Socket.IO chat
+    link(rel="stylesheet", type='text/css', href="/resources/css/bootstrap.css")
+    link(rel="stylesheet", type='text/css', href='/resources/css/common.css')
+    script(src='/resources/lib/jquery-1.4.4.min.js')    
+    script(src="/socket.io/socket.io.js")
+    script.
+      $(document).ready(function() {
+        var socket = io();
+
+        $('form').submit(function(e){
+          return false;
+        });
+        $('#yes').click(function() {
+          console.log("Inside final submit");
+          socket.emit('stateChange', 'answer');
+        });
+        $('#no').click(function() {         
+          alert("I do not understand this command");
+        });
+
+      });
+  body(class="black-background")
+    div(class='auto-margin' style='width: 250px; margin-top: 10px;')
+      img(src='/resources/images/common/ProposalRing.png' style='width: 250px;' class='auto-margin')
+    form(class="panel panel-default white-background auto-margin" style='width: 260px; margin-top: 0px;')
+      div(class="panel-title" style='font-size: 200%; text-align: center') Celine, will you marry me?
+      div(class="panel-body")
+        button(id='no', class="btn btn-lg btn-danger" style='margin-left: 30px; margin-right: 10px; width: 80px') No
+        button(id='yes', class="btn btn-lg btn-primary"  style='margin-right: 10px; width: 80px') Yes
+//- 
+//- <div class="panel panel-default" style='display: inline-block'>
+//-   <div class="panel-title">Will you ...</div>
+//-   <div class="panel-body">
+//-     <button class="btn btn-lg btn-primary">Yes</button>
+//-     <button class="btn btn-lg btn-danger">No</button>
+//-   </div>
+//-   <div class="panel-footer">Panel footer</div>
+//- </div>
