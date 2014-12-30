@@ -55,10 +55,9 @@ app.get('/images', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
 
     var imagesJSON = {};
-    // var initialPromise = readImageDirAsArray('/public/', 'resources/images/initialImages/');
     var initialPromise = readImageDirAsArray('/public/', 'resources/images/us/');
-    var questionPromise = readImageDirAsMap('/public/', 'resources/images/questionImages_v2/');
-    var answerPromise = readImageDirAsMap('/public/', 'resources/images/answerImages_v2/');
+    var questionPromise = readImageDirAsMap('/public/', 'resources/images/questionImages/');
+    var answerPromise = readImageDirAsMap('/public/', 'resources/images/answerImages/');
 
     var promise = q.all([initialPromise, questionPromise, answerPromise]);
     promise.spread(function(initialImages, questionImages, answerImages) {

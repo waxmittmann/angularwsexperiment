@@ -116,6 +116,27 @@
           function getImageOrder() {
             console.log("Generating image order from ", images, " first is ", images['Will_0.png']);
             var imageOrder = [];
+
+            imageOrder.push(createDirectiveImageObj('directive3_1', images['HeartA_0_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive3_2', images['HeartA_0_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_1', images['HeartA_1_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_2', images['HeartA_1_1.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive1_5', images['HeartB_0_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive1_6', images['HeartB_0_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_5', images['HeartB_1_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive2_6', images['HeartB_1_1.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive3_5', images['HeartC_0_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive3_6', images['HeartC_0_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_5', images['HeartC_1_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive4_6', images['HeartC_1_1.png']));
+
+            imageOrder.push(createDirectiveImageObj('directive5_1', images['HeartD_0_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive5_2', images['HeartD_0_1.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_1', images['HeartD_1_0.png']));
+            imageOrder.push(createDirectiveImageObj('directive6_2', images['HeartD_1_1.png']));
+
             imageOrder.push(createDirectiveImageObj('directive1_1', images['Will_0_0.png']));
             imageOrder.push(createDirectiveImageObj('directive2_1', images['Will_1_0.png']));
             imageOrder.push(createDirectiveImageObj('directive1_2', images['Will_0_1.png']));
@@ -133,6 +154,9 @@
             imageOrder.push(createDirectiveImageObj('directive6_5', images['Marry_1_2.png']));
             imageOrder.push(createDirectiveImageObj('directive5_6', images['Marry_0_3.png']));
             imageOrder.push(createDirectiveImageObj('directive6_6', images['Marry_1_3.png']));
+
+            imageOrder.push(createDirectiveImageObj('largeDirective', images['BigQuestionMark.png']));
+
             return imageOrder;
           }
 
@@ -148,7 +172,7 @@
                 function() {
                   executeImageSwitches(imageOrder);
                 },
-                500);
+                250);
               }
           }
 
@@ -211,23 +235,6 @@
             imageOrder.push(createDirectiveImageObj('directive6_5', images['Together_5_4.png']));
             imageOrder.push(createDirectiveImageObj('directive6_6', images['Together_5_5.png']));
 
-            // imageOrder.push(createDirectiveImageObj('directive1_1', images['Yes_0.png']));
-            // imageOrder.push(createDirectiveImageObj('directive1_2', images['Yes_1.png']));
-            // imageOrder.push(createDirectiveImageObj('directive1_3', images['Yes_2.png']));
-            // imageOrder.push(createDirectiveImageObj('directive1_4', images['ExclamationMark.png']));
-            //
-            // imageOrder.push(createDirectiveImageObj('directive2_6', images['Shi.png']));
-            // imageOrder.push(createDirectiveImageObj('directive3_6', images['ExclamationMark.png']));
-            //
-            // imageOrder.push(createDirectiveImageObj('directive4_3', images['Ja_0.png']));
-            // imageOrder.push(createDirectiveImageObj('directive4_4', images['Ja_1.png']));
-            // imageOrder.push(createDirectiveImageObj('directive4_5', images['ExclamationMark.png']));
-            //
-            // imageOrder.push(createDirectiveImageObj('directive3_1', images['Heart0_0.png']));
-            // imageOrder.push(createDirectiveImageObj('directive3_2', images['Heart0_1.png']));
-            // imageOrder.push(createDirectiveImageObj('directive4_2', images['Heart1_1.png']));
-            // imageOrder.push(createDirectiveImageObj('directive4_1', images['Heart1_0.png']));
-
             return imageOrder;
           }
 
@@ -244,7 +251,7 @@
                 function() {
                   executeImageSwitches(imageOrder);
                 },
-                500);
+                150);
               }
             }
 
