@@ -251,7 +251,7 @@
                 function() {
                   executeImageSwitches(imageOrder);
                 },
-                150);
+                120);
               }
             }
 
